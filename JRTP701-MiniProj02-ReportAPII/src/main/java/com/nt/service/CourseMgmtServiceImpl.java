@@ -1,10 +1,12 @@
 package com.nt.service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.BeanUtils;
@@ -19,6 +21,7 @@ import com.nt.model.SearchInputs;
 import com.nt.model.SearchResults;
 import com.nt.repository.ICourseDetailsRepository;
 
+import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Service("courseService")
@@ -75,11 +78,42 @@ public class CourseMgmtServiceImpl implements ICourseMgmtService {
 	}
 
 	@Override
-	public void generateExcelReport(SearchInputs inputs, HttpServletResponse res) {
+	public void generateExcelReport(SearchInputs inputs, HttpServletResponse res) throws Exception {
 		List<SearchResults> listResults=showCoursesByFilters(inputs);
 		HSSFWorkbook workbook=new HSSFWorkbook();
 		HSSFSheet sheet1=workbook.createSheet("CourseDetails");
-
+		HSSFRow headerRow=sheet1.createRow(0);
+		headerRow.createCell(0).setCellValue("CourseId");
+		headerRow.createCell(1).setCellValue("CourseName");
+		headerRow.createCell(2).setCellValue("Location");
+		headerRow.createCell(3).setCellValue("CourseCategory");
+		headerRow.createCell(4).setCellValue("FacultyName");
+		headerRow.createCell(5).setCellValue("Fee");
+		headerRow.createCell(6).setCellValue("adminContact");
+		headerRow.createCell(7).setCellValue("trainingMode");
+		headerRow.createCell(8).setCellValue("startDate");
+		headerRow.createCell(9).setCellValue("CourseStatus");
+		
+		int i=1;
+		for(SearchResults results:listResults) {
+			HSSFRow dataRow=sheet1.createRow(i);
+			dataRow.createCell(0).setCellValue(results.getCourseId());
+			dataRow.createCell(1).setCellValue(results.getCourseName());
+			dataRow.createCell(2).setCellValue(results.getLocation());
+			dataRow.createCell(3).setCellValue(results.getCourseCategory());
+			dataRow.createCell(4).setCellValue(results.getFacultyName());
+			dataRow.createCell(5).setCellValue(results.getFee());
+			dataRow.createCell(6).setCellValue(results.getAdminContact());
+			dataRow.createCell(7).setCellValue(results.getTrainingMode());
+			dataRow.createCell(8).setCellValue(results.getStartDate());
+			dataRow.createCell(9).setCellValue(results.getCourseStatus());
+			i++;
+		}
+		
+		ServletOutputStream outputStream=res.getOutputStream();
+		workbook.write(outputStream);
+		outputStream.close();
+		workbook.close();
 	}
 
 }
