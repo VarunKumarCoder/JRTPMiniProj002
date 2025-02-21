@@ -18,20 +18,19 @@ public class CourseMgmtServiceImpl implements ICourseMgmtService {
 	private ICourseDetailsRepository courseRepo;
 	@Override
 	public Set<String> showAllCourseCategories() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return courseRepo.getUniqueCourseCategories();
 	}
 
 	@Override
 	public Set<String> ShowAllTrainingModes() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return courseRepo.getUniquetrainingModes();
 	}
 
 	@Override
 	public Set<String> ShowAllFaculties() {
-		// TODO Auto-generated method stub
-		return null;
+		return courseRepo.getUniquefacultyNames();
 	}
 
 	@Override
