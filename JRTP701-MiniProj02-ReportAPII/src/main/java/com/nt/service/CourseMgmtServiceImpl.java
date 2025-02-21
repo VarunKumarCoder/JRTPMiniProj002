@@ -105,8 +105,41 @@ public class CourseMgmtServiceImpl implements ICourseMgmtService {
 		cell.setPadding(5);
 		Font cellFont=FontFactory.getFont(FontFactory.HELVETICA_BOLD);
 		cellFont.setColor(Color.BLACK);
+		
 		cell.setPhrase(new Phrase("courseID",cellFont));
-
+		table.addCell(cell);
+		cell.setPhrase(new Phrase("courseName",cellFont));
+		table.addCell(cell);
+		cell.setPhrase(new Phrase("Category",cellFont));
+		table.addCell(cell);
+		cell.setPhrase(new Phrase("FacultyName",cellFont));
+		table.addCell(cell);
+		cell.setPhrase(new Phrase("Location",cellFont));
+		table.addCell(cell);
+		cell.setPhrase(new Phrase("Fee",cellFont));
+		table.addCell(cell);
+		cell.setPhrase(new Phrase("CourseStatus",cellFont));
+		table.addCell(cell);
+		cell.setPhrase(new Phrase("TrainingMode",cellFont));
+		table.addCell(cell);
+		cell.setPhrase(new Phrase("AdminContact",cellFont));
+		table.addCell(cell);
+		cell.setPhrase(new Phrase("StartDate",cellFont));
+		table.addCell(cell);
+		
+		listResult.forEach(result->{
+			table.addCell(String.valueOf(result.getCourseId()));
+			table.addCell(result.getCourseName());
+			table.addCell(result.getCourseCategory());
+			table.addCell(result.getFacultyName());
+			table.addCell(result.getLocation());
+			table.addCell(String.valueOf(result.getFee()));
+			table.addCell(result.getCourseStatus());
+			table.addCell(result.getTrainingMode());
+			table.addCell(String.valueOf(result.getAdminContact()));
+			table.addCell(result.getStartDate().toString());
+			
+		});
 	}
 
 	@Override
