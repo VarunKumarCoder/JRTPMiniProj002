@@ -11,9 +11,18 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Entity
 @Table(name="JRTP_COURSE_DETAILS")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class CourseDetails {
 	@Id
 	@GeneratedValue
@@ -28,6 +37,7 @@ public class CourseDetails {
 	private String facultyName;
 	private Double fee;
 	@Column(length=30)
+	@NonNull
 	private String adminName;
 	private Long adminContact;
 	@Column(length=30)

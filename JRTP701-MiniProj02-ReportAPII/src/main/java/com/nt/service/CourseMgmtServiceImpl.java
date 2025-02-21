@@ -1,11 +1,18 @@
 package com.nt.service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
+import com.nt.entity.CourseDetails;
 import com.nt.model.SearchInputs;
 import com.nt.model.SearchResults;
 import com.nt.repository.ICourseDetailsRepository;
@@ -34,14 +41,34 @@ public class CourseMgmtServiceImpl implements ICourseMgmtService {
 	}
 
 	@Override
-	public List<SearchResults> showCoursesByFilters(SearchInputs inpust) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<SearchResults> showCoursesByFilters(SearchInputs inputs) {
+		CourseDetails entity = new CourseDetails();
+		String category=inputs.getCourseCategory();
+		if(StringUtils.hasLength(category))
+			entity.setCourseCategory(category);
+		String facultyName=inputs.getFacultyName();
+		if(StringUtils.hasLength(facultyName))
+			entity.setFacultyName(facultyName);
+		String trainingMode=inputs.getTrainingMode();
+		if(StringUtils.hasLength(trainingMode))
+			entity.setTrainingMode(trainingMode);
+		LocalDateTime startDate=inputs.getStartsOn();
+		if(ObjectUtils.isEmpty(startDate))
+			entity.setStartDate(startDate);
+		Example<CourseDetails> example=Example.of(entity);
+		List<CourseDetails> listEntities=courseRepo.findAll(example);
+		List<SearchResults> listResults=new ArrayList();
+		listEntities.forEach(course->{
+			SearchResults result=new SearchResults();
+			BeanUtils.copyProperties(course, result);
+			listResults.add(result);
+		});
+		return listResults;
 	}
 
 	@Override
 	public void generatePdfReport(SearchInputs inputs, HttpServletResponse res) {
-		// TODO Auto-generated method stub
+		
 
 	}
 
