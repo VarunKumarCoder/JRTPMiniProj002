@@ -24,7 +24,6 @@ import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.nt.entity.CourseDetails;
 import com.nt.model.SearchInputs;
