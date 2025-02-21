@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -74,7 +76,9 @@ public class CourseMgmtServiceImpl implements ICourseMgmtService {
 
 	@Override
 	public void generateExcelReport(SearchInputs inputs, HttpServletResponse res) {
-		// TODO Auto-generated method stub
+		List<SearchResults> listResults=showCoursesByFilters(inputs);
+		HSSFWorkbook workbook=new HSSFWorkbook();
+		HSSFSheet sheet1=workbook.createSheet("CourseDetails");
 
 	}
 
