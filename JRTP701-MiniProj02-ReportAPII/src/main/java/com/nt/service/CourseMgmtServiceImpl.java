@@ -1,6 +1,6 @@
 package com.nt.service;
 
-import java.io.IOException;
+import java.awt.Color;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
+import com.lowagie.text.Document;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfTable;
+import com.lowagie.text.pdf.PdfWriter;
 import com.nt.entity.CourseDetails;
 import com.nt.model.SearchInputs;
 import com.nt.model.SearchResults;
@@ -72,8 +82,30 @@ public class CourseMgmtServiceImpl implements ICourseMgmtService {
 	}
 
 	@Override
-	public void generatePdfReport(SearchInputs inputs, HttpServletResponse res) {
+	public void generatePdfReport(SearchInputs inputs, HttpServletResponse res) throws Exception {
+		List<SearchResults> listResult=showCoursesByFilters(inputs);
+		Document document=new Document(PageSize.A4);
+		PdfWriter.getInstance(document, res.getOutputStream());
+		document.open();
+		Font font=FontFactory.getFont(FontFactory.TIMES_BOLD);
+		font.setSize(30);
+		font.setColor(Color.RED);
+		Paragraph para=new Paragraph("Search Report Of Cources",font);
+		para.setAlignment(Paragraph.ALIGN_CENTER);
+		document.add(para);
+		PdfPTable table=new PdfPTable(10);
+		table.setWidthPercentage(70);
+		table.setWidths(new float[] {1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f});
+		table.setSpacingBefore(2.0f);
 		
+		//prepare Heading Row Cells in the pdf table
+		
+		PdfPCell cell=new PdfPCell();
+		cell.setBackgroundColor(Color.gray);
+		cell.setPadding(5);
+		Font cellFont=FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+		cellFont.setColor(Color.BLACK);
+		cell.setPhrase(new Phrase("courseID",cellFont));
 
 	}
 
