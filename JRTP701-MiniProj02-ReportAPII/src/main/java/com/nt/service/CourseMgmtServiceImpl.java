@@ -137,9 +137,13 @@ public class CourseMgmtServiceImpl implements ICourseMgmtService {
 			table.addCell(result.getCourseStatus());
 			table.addCell(result.getTrainingMode());
 			table.addCell(String.valueOf(result.getAdminContact()));
-			table.addCell(result.getStartDate().toString());
-			
+			table.addCell(result.getStartDate().toString());	
 		});
+		
+		//Add table to document
+		document.add(table);
+		//close the document
+		document.close();
 	}
 
 	@Override
