@@ -36,5 +36,14 @@ public class ReportingOperationController {
 			}
 		}
 		
+		@GetMapping("/faculties")
+		public ResponseEntity<?> fetchFaculties(){
+			try {
+				Set<String> faculties=service.ShowAllFaculties();
+				return new ResponseEntity<Set<String>>(faculties,HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity<String>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
 		
 }
