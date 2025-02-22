@@ -76,5 +76,20 @@ public class ReportingOperationController {
 			}		
 		}
 		
+		@PostMapping("/excel-report")
+		public void showexcelReport(@RequestBody SearchInputs inputs,HttpServletResponse res) {
+			try {
+				//set the response content type
+				res.setContentType("application/vnd.ms-excel");
+				//set the content-disposition header to response content going to browser as downlodeble file
+				res.setHeader("Content-Disposition", "attachment;fileName=courses.xls");
+				service.generatePdfReport(inputs, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}		
+		}
+		
+		
+		
 		
 }
