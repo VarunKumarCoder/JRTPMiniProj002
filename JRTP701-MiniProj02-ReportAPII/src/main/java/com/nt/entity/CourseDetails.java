@@ -9,7 +9,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,7 +27,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CourseDetails {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "course_seq")
+	@SequenceGenerator(name = "course_seq", sequenceName = "JRTP_COURSE_SEQ", allocationSize = 1)
 	private Integer courseId;
 	@Column(length=30)
 	private String courseName;
@@ -53,6 +56,6 @@ public class CourseDetails {
 	@Column(length=30)
 	private String createdBy;
 	@Column(length=30)
-	private String ipdatedBy;
+	private String updatedBy;
 	
 }

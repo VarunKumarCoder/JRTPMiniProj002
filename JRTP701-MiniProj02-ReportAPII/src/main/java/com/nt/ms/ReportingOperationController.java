@@ -89,6 +89,30 @@ public class ReportingOperationController {
 			}		
 		}
 		
+		@GetMapping("/all-excel-report")
+		public void showExcelReportAllData(HttpServletResponse res) {
+			try {
+				res.setContentType("application/vnd.ms-excel");
+				res.setHeader("Content-Disposition", "attachment;fileName=courses.xls");
+				service.generateXlsReportAll(res);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		@GetMapping("/all-pdf-report")
+		public void showPdfReportAllData(HttpServletResponse res) {
+			try {
+				res.setContentType("application/pdf");
+				res.setHeader("Content-Disposition", "attachment;fileName=courses.pdf");
+				service.generatePdfReportAll(res);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		
 		
 		
