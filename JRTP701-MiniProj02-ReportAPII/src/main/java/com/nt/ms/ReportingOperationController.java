@@ -16,6 +16,8 @@ import com.nt.model.SearchInputs;
 import com.nt.model.SearchResults;
 import com.nt.service.ICourseMgmtService;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 @RestController
 @RequestMapping("/reporting/api")
 public class ReportingOperationController {
@@ -59,6 +61,19 @@ public class ReportingOperationController {
 			} catch (Exception e) {
 				return new ResponseEntity<String>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
 			}
+		}
+		
+		@PostMapping("/pdf-report")
+		public void showPdfReport(@RequestBody SearchInputs inputs,HttpServletResponse res) {
+			try {
+				//set the response content type
+				res.setContentType("application/pdf");
+				//set the content-disposition header to response content going to browser as downloadable file
+				res.setHeader("Content-Disposition", "attachment;fileName=courses.pdf");
+				service.generatePdfReport(inputs, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}		
 		}
 		
 		
