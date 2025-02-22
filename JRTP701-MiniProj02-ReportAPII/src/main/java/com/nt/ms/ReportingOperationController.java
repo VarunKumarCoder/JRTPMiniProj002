@@ -26,4 +26,15 @@ public class ReportingOperationController {
 				return new ResponseEntity<String>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
+		@GetMapping("/training-modes")
+		public ResponseEntity<?> fetchAllTrainingModes(){
+			try {
+				Set<String> trainingModeInfo=service.ShowAllTrainingModes();
+				return new ResponseEntity<Set<String>>(trainingModeInfo,HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity<String>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+		
+		
 }
